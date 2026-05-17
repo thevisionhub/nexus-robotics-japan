@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth bg-ink-950;
+  }
+
+  body {
+    @apply font-sans bg-platinum-100 text-navy-charcoal antialiased selection:bg-cyber-cyan/30 selection:text-white;
+    overflow-x: hidden;
+  }
+
+  * {
+    min-width: 0;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-white/70 shadow-sm;
+  }
+  
+  .glass-panel-dark {
+    @apply bg-ink-900/80 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-ink-950 via-brand-800 to-cyber-indigo;
+  }
+
+  .gradient-text-dark {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-platinum-200 to-cyber-cyan;
+  }
+
+  .premium-surface {
+    @apply bg-white/90 border border-platinum-200 shadow-[0_18px_60px_rgba(2,6,23,0.08)];
+  }
+
+  .premium-dark-surface {
+    @apply bg-ink-900/90 border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.32)];
+  }
+
+  .technical-label {
+    @apply text-[10px] font-bold uppercase tracking-[0.22em] text-surface-muted;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-scrollbar {
+    scrollbar-color: rgba(56, 189, 248, 0.45) rgba(255, 255, 255, 0.06);
+    scrollbar-width: thin;
+  }
+
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe-only {
+      animation: none !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
