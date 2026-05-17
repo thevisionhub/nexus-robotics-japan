@@ -11,6 +11,7 @@ import {
   BarChart2,
   BookmarkCheck,
   BookmarkPlus,
+  Bot,
   CalendarClock,
   Factory,
   Gauge,
@@ -43,6 +44,17 @@ const readinessLabel = (robot: Robot) => {
   return 'Specialist review';
 };
 
+const RobotBlueprintOverlay = () => (
+  <div className="pointer-events-none absolute inset-0 z-[15] flex items-center justify-center">
+    <div className="relative flex h-28 w-28 items-center justify-center rounded-[2rem] border border-cyber-cyan/20 bg-ink-950/42 shadow-[0_0_55px_rgba(56,189,248,0.18)] backdrop-blur-[2px]">
+      <div className="absolute inset-3 rounded-[1.45rem] border border-dashed border-white/15" />
+      <div className="absolute -left-8 top-1/2 h-px w-10 bg-cyber-cyan/35" />
+      <div className="absolute -right-8 top-1/2 h-px w-10 bg-cyber-cyan/35" />
+      <Bot size={42} className="text-white drop-shadow-[0_0_18px_rgba(56,189,248,0.55)]" />
+    </div>
+  </div>
+);
+
 export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) => {
   const navigate = useNavigate();
   const { isSaved, toggleSaveRobot } = useSavedRobots();
@@ -51,6 +63,9 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
   const saved = isSaved(robot.id);
   const compared = isCompared(robot.id);
   const score = robot.matchScore || 85;
+  const deploymentRegions = robot.japanRegions?.join(', ') || (robot.japanSupport ? 'Japan partner coverage' : 'Remote support only');
+  const roiLabel = robot.roiMonths ? `${robot.roiMonths} mo ROI` : 'ROI review';
+  const supportText = robot.supportTier || (robot.japanSupport ? 'Japan support available' : 'Support validation required');
 
   const handleCompareClick = () => {
     if (compared) {
@@ -98,8 +113,9 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
             <img
               src={robot.image}
               alt={robot.name}
-              className="h-full min-h-[210px] w-full object-cover opacity-70 grayscale transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100 group-hover/card:grayscale-0"
+              className="h-full min-h-[210px] w-full object-cover opacity-35 grayscale transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-48"
             />
+            <RobotBlueprintOverlay />
             <div className="absolute left-3 top-3">
               <Badge variant={robot.japanSupport ? 'success' : 'warning'}>{robot.japanSupport ? 'Japan SLA' : 'Remote Support'}</Badge>
             </div>
@@ -141,7 +157,7 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
             <div className="mt-4 min-h-[64px] rounded-xl border border-white/10 bg-white/[0.035] p-3">
               <p className="mb-1 text-[9px] font-black uppercase tracking-[0.2em] text-cyber-cyan">Why this fits</p>
               <p className="line-clamp-2 text-xs font-semibold leading-5 text-white/62">
-                {robot.bestFor} {robot.strengths[0]}
+                {robot.bestFor} {supportText}
               </p>
             </div>
           </div>
@@ -159,7 +175,7 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
                 {saved ? <BookmarkCheck size={15} className="mr-1.5" /> : <BookmarkPlus size={15} className="mr-1.5" />}
                 {saved ? 'Saved' : 'Save'}
               </Button>
-              <Button size="sm" variant="outline" className="bg-white text-ink-950 hover:text-ink-950" onClick={requestIntro} data-cursor="START">
+              <Button size="sm" variant="primary" onClick={requestIntro} data-cursor="START">
                 <Handshake size={15} className="mr-1.5" /> Intro
               </Button>
             </div>
@@ -181,8 +197,9 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
         <img
           src={robot.image}
           alt={robot.name}
-          className="h-full w-full object-cover opacity-74 grayscale transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-100 group-hover/card:grayscale-0"
+          className="h-full w-full object-cover opacity-35 grayscale transition-all duration-500 group-hover/card:scale-105 group-hover/card:opacity-48"
         />
+        <RobotBlueprintOverlay />
         <div className="absolute left-3 top-3 z-20 flex flex-wrap gap-2">
           <Badge variant={robot.japanSupport ? 'success' : 'warning'} className="text-[9px]">
             {robot.japanSupport ? 'Japan Support' : 'Partner Needed'}
@@ -227,12 +244,15 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
           ))}
         </div>
 
-        <div className="mt-4 min-h-[88px] rounded-xl border border-white/10 bg-white/[0.035] p-3 transition-colors group-hover/card:bg-cyber-cyan/[0.055]">
+        <div className="mt-4 min-h-[112px] rounded-xl border border-white/10 bg-white/[0.035] p-3 transition-colors group-hover/card:bg-cyber-cyan/[0.055]">
           <div className="mb-2 flex items-center gap-2">
             <BadgeCheck size={14} className="text-cyber-cyan" />
             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-cyber-cyan">Why this fits</p>
           </div>
           <p className="line-clamp-2 text-xs font-semibold leading-5 text-white/62">{robot.bestFor}</p>
+          <p className="mt-2 line-clamp-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/38">
+            {deploymentRegions} / {roiLabel}
+          </p>
         </div>
 
         <div className="mt-4">
@@ -248,10 +268,10 @@ export const RobotCard: React.FC<RobotCardProps> = ({ robot, view = 'grid' }) =>
             {saved ? <BookmarkCheck size={15} className="mr-1.5" /> : <BookmarkPlus size={15} className="mr-1.5" />}
             {saved ? 'Saved' : 'Save'}
           </Button>
-          <Button size="sm" variant="outline" className="bg-white text-ink-950 hover:text-ink-950" onClick={() => navigate(`/robot/${robot.id}`)} data-cursor="VIEW">
+          <Button size="sm" variant="secondary" onClick={() => navigate(`/robot/${robot.id}`)} data-cursor="VIEW">
             View
           </Button>
-          <Button size="sm" variant="outline" className="bg-white text-ink-950 hover:text-ink-950" onClick={requestIntro} data-cursor="START">
+          <Button size="sm" variant="primary" onClick={requestIntro} data-cursor="START">
             <ShieldCheck size={15} className="mr-1.5" /> Intro
           </Button>
         </div>

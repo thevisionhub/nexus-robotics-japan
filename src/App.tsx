@@ -5,6 +5,7 @@ import { AppLayout } from './components/layout/AppLayout';
 import { IntroExperience } from './components/ui/IntroExperience';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { PageTransition } from './components/layout/PageTransition';
+import { RouteSEO } from './components/seo/RouteSEO';
 
 import { Home } from './pages/Home';
 import { Marketplace } from './pages/Marketplace';
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <>
+      <RouteSEO />
       <IntroExperience />
       <CustomCursor />
       <Toaster 

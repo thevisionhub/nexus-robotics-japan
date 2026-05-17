@@ -17,7 +17,7 @@ export const Manufacturers: React.FC = () => {
         <BlueprintGridBackground dense />
         <div className="relative z-10 mx-auto max-w-7xl text-center">
           <SectionKicker>Verified Partner Intelligence</SectionKicker>
-          <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="mx-auto max-w-4xl text-balance text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
+          <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="mx-auto max-w-4xl text-balance text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
             Global robotics manufacturers, mapped for Japan readiness.
           </motion.h1>
           <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-platinum-300">

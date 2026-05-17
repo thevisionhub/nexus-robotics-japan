@@ -38,6 +38,33 @@ export const Matching: React.FC = () => {
   const handleNext = () => setStep(s => s + 1);
   const handlePrev = () => setStep(s => Math.max(1, s - 1));
 
+  const calculateFitScore = (robot: typeof mockRobots[number]) => {
+    let score = 52;
+    const promptText = prompt.toLowerCase();
+
+    if (selections.industry && robot.industries.includes(selections.industry)) score += 16;
+    if (selections.task && (robot.tasks.includes(selections.task) || robot.capabilities.some(cap => cap.toLowerCase().includes(selections.task.toLowerCase())))) score += 16;
+
+    const payloadTarget = selections.payload === 'Under 50kg' ? 50 :
+      selections.payload === '50kg - 200kg' ? 200 :
+      selections.payload === '200kg - 500kg' ? 500 :
+      selections.payload === 'Over 500kg' ? 501 : 0;
+
+    if (payloadTarget) {
+      if (selections.payload === 'Over 500kg') score += robot.payloadKg >= 500 ? 15 : -8;
+      else score += robot.payloadKg <= payloadTarget && robot.payloadKg >= payloadTarget * 0.18 ? 15 : -5;
+    }
+
+    if (selections.environment && robot.operatingEnvironment.toLowerCase().includes(selections.environment.toLowerCase().split(' ')[0])) score += 8;
+    if (robot.japanSupport) score += 8;
+    if (robot.integrationTypes.some(type => ['API', 'WMS', 'PLC', 'MES'].includes(type))) score += 5;
+    if (promptText.includes('warehouse') && robot.industries.includes('Warehousing')) score += 6;
+    if (promptText.includes('inspection') && robot.category === 'Inspection') score += 6;
+    if (promptText.includes('pallet') && (robot.category === 'AMR' || robot.category === 'Palletizing')) score += 6;
+
+    return Math.max(64, Math.min(99, score));
+  };
+
   const handleGenerate = () => {
     setIsGenerating(true);
     setStep(5);
@@ -60,7 +87,9 @@ export const Matching: React.FC = () => {
     });
     
     setTimeout(() => {
-      const sorted = [...mockRobots].sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
+      const sorted = mockRobots
+        .map(robot => ({ ...robot, matchScore: calculateFitScore(robot) }))
+        .sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0));
       setMatchedRobots(sorted.slice(0, 3));
       setIsGenerating(false);
       setExpandedReason(sorted[0]?.id || null);

@@ -13,6 +13,7 @@ dist-ssr
 dist.zip
 judge-screens/
 screenshots/
+responsive-check/
 *.local
 
 # Editor directories and files

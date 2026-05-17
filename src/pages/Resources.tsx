@@ -117,8 +117,8 @@ export const Resources: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 bg-surface-light min-h-[calc(100vh-64px)] pb-20">
-      <div className="bg-[#0B1120] text-white pt-16 pb-24 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
+    <div className="flex-1 bg-ink-950 min-h-[calc(100vh-64px)] pb-20">
+      <div className="bg-[#0B1120] text-white pt-24 sm:pt-28 pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3] }}
@@ -146,7 +146,7 @@ export const Resources: React.FC = () => {
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-12 relative z-20">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 relative z-20">
         <div className="grid gap-6">
           {resources.map((res, i) => (
             <motion.div 
@@ -156,26 +156,26 @@ export const Resources: React.FC = () => {
               transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
               onClick={() => handleResourceClick(res)}
             >
-              <Card className="hover:border-brand-400 hover:shadow-[0_10px_30px_rgba(37,99,235,0.1)] transition-all duration-300 bg-white group cursor-pointer overflow-hidden relative">
+              <Card className="hover:border-cyber-cyan/45 hover:shadow-[0_18px_60px_rgba(56,189,248,0.10)] transition-all duration-300 bg-white/[0.065] group cursor-pointer overflow-hidden relative">
                 {res.premium && <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-status-warning/20 to-transparent flex items-start justify-end p-2 opacity-50"><Lock size={14} className="text-status-warning" /></div>}
                 
                 <CardContent className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                   <div className="flex items-start gap-5 flex-1">
                     <motion.div 
                       whileHover={{ rotate: -5, scale: 1.05 }}
-                      className="p-4 bg-surface-light border border-surface-gray text-navy-deep rounded-xl flex-shrink-0 mt-1 group-hover:bg-brand-50 group-hover:border-brand-200 group-hover:text-brand-600 transition-colors shadow-sm"
+                      className="p-4 bg-white/5 border border-white/10 text-cyber-cyan rounded-xl flex-shrink-0 mt-1 group-hover:bg-cyber-cyan/10 group-hover:border-cyber-cyan/30 transition-colors shadow-sm"
                     >
                       <FileText size={28} />
                     </motion.div>
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs font-bold text-surface-muted uppercase tracking-wider">{res.type}</span>
+                        <span className="text-xs font-bold text-white/48 uppercase tracking-wider">{res.type}</span>
                         {res.premium && <Badge variant="outline" className="text-[10px] py-0 border-status-warning/30 bg-status-warning/10 text-status-warning font-bold"><Lock size={10} className="mr-1"/> Premium Analysis</Badge>}
                         {!res.premium && <Badge variant="success" className="text-[10px] py-0">Free</Badge>}
                       </div>
-                      <h3 className="text-xl font-bold text-navy-deep mb-2 leading-tight group-hover:text-brand-600 transition-colors">{res.title}</h3>
-                      <p className="text-sm text-navy-charcoal leading-relaxed">{res.desc}</p>
-                      <div className="mt-4 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider text-surface-muted">
+                      <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-cyber-cyan transition-colors">{res.title}</h3>
+                      <p className="text-sm text-platinum-300 leading-relaxed">{res.desc}</p>
+                      <div className="mt-4 flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider text-white/45">
                         <span>{res.pages} pages</span>
                         <span>/</span>
                         <span>{res.difficulty}</span>
@@ -186,7 +186,11 @@ export const Resources: React.FC = () => {
                   </div>
                   <Button 
                     variant={res.premium ? "outline" : "primary"} 
-                    className="flex-shrink-0 w-full sm:w-auto shrink-0 pointer-events-none"
+                    className={res.premium ? "flex-shrink-0 w-full sm:w-auto shrink-0 border-white/15 bg-white/[0.04] text-white hover:bg-white/10 hover:text-white" : "flex-shrink-0 w-full sm:w-auto shrink-0"}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleResourceClick(res);
+                    }}
                   >
                     {res.premium ? 'Request Access' : 'Preview'}
                   </Button>

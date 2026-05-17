@@ -14,7 +14,7 @@ export const Compare: React.FC = () => {
 
   if (compareList.length === 0) {
     return (
-      <div className="flex-1 bg-surface-light min-h-[calc(100vh-64px)] flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+      <div className="flex-1 bg-surface-light min-h-[calc(100vh-64px)] flex flex-col items-center justify-center p-4 pt-28 sm:p-6 sm:pt-28 text-center">
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-surface-gray max-w-lg w-full">
           <div className="w-20 h-20 bg-surface-light rounded-full flex items-center justify-center mx-auto mb-6 text-surface-muted">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
@@ -73,6 +73,8 @@ export const Compare: React.FC = () => {
         {r.id === fastestId && <span className="text-[10px] text-brand-600 font-bold uppercase tracking-wider flex items-center gap-1 mt-1"><Activity size={12}/> Fastest Setup</span>}
       </div>
     )},
+    { key: 'roiMonths', label: 'ROI Baseline', render: (r: any) => <span className="font-bold text-navy-charcoal">{r.roiMonths ? `${r.roiMonths} months` : 'Pilot dependent'}</span> },
+    { key: 'priceModel', label: 'Pricing Logic', render: (r: any) => <span className="text-sm font-semibold text-navy-charcoal">{r.priceModel || 'Manufacturer quote required'}</span> },
     { key: 'payloadKg', label: 'Max Payload', render: (r: any) => (
       <div className="flex flex-col items-center sm:items-start">
         <span className="font-bold text-navy-charcoal">{r.payloadKg} kg</span>
@@ -87,6 +89,8 @@ export const Compare: React.FC = () => {
         {r.id === bestJapanSupportId && <span className="text-[10px] text-status-success font-bold uppercase tracking-wider flex items-center gap-1"><CheckCircle2 size={12}/> Best Japan Support</span>}
       </div>
     )},
+    { key: 'supportTier', label: 'Support Tier', render: (r: any) => <span className="text-sm font-semibold text-navy-charcoal">{r.supportTier || 'Support validation required'}</span> },
+    { key: 'japanRegions', label: 'Deployment Regions', render: (r: any) => <span className="text-sm font-semibold text-navy-charcoal">{r.japanRegions?.join(', ') || 'Remote support'}</span> },
   ];
 
   const hasDifference = (key: string) => {
@@ -101,14 +105,14 @@ export const Compare: React.FC = () => {
     <div className="flex-1 bg-surface-light min-h-[calc(100vh-64px)] pb-20">
       
       {/* Enterprise Header */}
-      <div className="bg-[#0B1120] text-white pt-10 pb-12 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative">
+      <div className="bg-[#0B1120] text-white pt-24 sm:pt-28 pb-12 px-4 sm:px-6 lg:px-8 border-b border-white/10 relative">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <div className="relative mx-auto max-w-[1600px] z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-surface-gray">Comparison Matrix</h1>
             <p className="text-surface-gray text-sm sm:text-base">Evaluating {compareList.length} technical profiles</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
             <label className="flex items-center gap-2 text-sm font-medium text-surface-gray cursor-pointer hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-lg border border-white/10">
               <input 
                 type="checkbox" 
@@ -118,7 +122,7 @@ export const Compare: React.FC = () => {
               />
               Show differences only
             </label>
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={clearCompare}>
+            <Button variant="outline" className="border-white/20 bg-white/[0.04] text-white hover:bg-white/10 hover:text-white" onClick={clearCompare}>
               Clear All
             </Button>
           </div>

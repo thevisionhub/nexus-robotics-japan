@@ -37,6 +37,9 @@ export const Dashboard: React.FC = () => {
     return <span>{prefix}{count}{suffix}</span>;
   };
 
+  const chartCardClass = "h-full border-white/10 bg-white/[0.065] text-white shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl";
+  const chartHeaderClass = "border-b border-white/10 bg-white/[0.045]";
+
   return (
     <div className="relative flex-1 overflow-hidden bg-ink-950 p-4 pt-28 sm:p-6 sm:pt-28 lg:p-8 lg:pt-28 min-h-[calc(100vh-64px)] pb-20">
       <BlueprintGridBackground dense className="opacity-45" />
@@ -105,14 +108,14 @@ export const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Gauge Widget */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 }}>
-            <Card className="h-full shadow-sm border-surface-gray bg-white flex flex-col items-center justify-center p-6 text-center group hover:border-brand-400 transition-colors">
-              <h3 className="text-sm font-bold text-navy-deep uppercase tracking-wider mb-4">Japan Automation Opportunity Index</h3>
+            <Card className={`${chartCardClass} flex flex-col items-center justify-center p-6 text-center group hover:border-cyber-cyan/40 transition-colors`}>
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Japan Automation Opportunity Index</h3>
               <div className="relative w-40 h-40 flex items-center justify-center">
                 <svg className="w-full h-full transform -rotate-180">
-                  <circle cx="50%" cy="50%" r="45%" stroke="#E2E8F0" strokeWidth="10%" fill="transparent" strokeDasharray="141% 141%" strokeLinecap="round" />
+                  <circle cx="50%" cy="50%" r="45%" stroke="rgba(255,255,255,0.10)" strokeWidth="10%" fill="transparent" strokeDasharray="141% 141%" strokeLinecap="round" />
                   <motion.circle 
                     cx="50%" cy="50%" r="45%" 
-                    stroke="#2563EB" strokeWidth="10%" fill="transparent" 
+                    stroke="#38BDF8" strokeWidth="10%" fill="transparent" 
                     strokeDasharray="141% 141%" 
                     initial={{ strokeDashoffset: "141%" }}
                     animate={{ strokeDashoffset: `${141 - (141 * gaugeValue) / 100}%` }}
@@ -121,35 +124,35 @@ export const Dashboard: React.FC = () => {
                   />
                 </svg>
                 <div className="absolute text-center mt-6">
-                  <p className="text-4xl font-extrabold text-navy-deep">{gaugeValue}</p>
-                  <p className="text-[10px] font-bold text-surface-muted uppercase">Out of 100</p>
+                  <p className="text-4xl font-extrabold text-white">{gaugeValue}</p>
+                  <p className="text-[10px] font-bold text-white/45 uppercase">Out of 100</p>
                 </div>
               </div>
-              <p className="text-xs text-surface-muted mt-4 max-w-xs">Score indicates extremely high readiness for warehouse robotic expansion in Q3 2026.</p>
+              <p className="text-xs text-platinum-300 mt-4 max-w-xs">Score indicates high readiness for warehouse robotic expansion in Q3 2026.</p>
             </Card>
           </motion.div>
 
           {/* Line Chart */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="lg:col-span-2">
-            <Card className="h-full shadow-sm border-surface-gray group hover:shadow-md transition-shadow bg-white text-ink-950">
-              <CardHeader className="border-b border-surface-gray bg-surface-light/30 pb-4">
-                <CardTitle className="text-sm sm:text-base font-bold flex justify-between items-center">
+            <Card className={`${chartCardClass} group hover:border-cyber-cyan/40 transition-colors`}>
+              <CardHeader className={`${chartHeaderClass} pb-4`}>
+                <CardTitle className="text-sm sm:text-base font-bold flex justify-between items-center text-white">
                   Deployment Demand Trend
-                  <Badge variant="outline" className="bg-brand-50 text-brand-700 border-brand-200">+24% MoM</Badge>
+                  <Badge variant="outline" className="bg-cyber-cyan/10 text-cyber-cyan border-cyber-cyan/25">+24% MoM</Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent className="h-64 sm:h-80 pt-6">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={dashboardData.deploymentTrend} margin={{ top: 5, right: 20, left: -20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.10)" />
                     <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94A3B8' }} dy={10} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94A3B8' }} />
                     <Tooltip 
-                      contentStyle={{ borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)', padding: '12px' }} 
+                      contentStyle={{ borderRadius: '12px', border: '1px solid rgba(255,255,255,0.12)', background: '#0B1120', color: '#fff', boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.4)', padding: '12px' }} 
                       itemStyle={{ fontWeight: 'bold' }}
-                      cursor={{ stroke: '#E2E8F0', strokeWidth: 2 }}
+                      cursor={{ stroke: 'rgba(56,189,248,0.28)', strokeWidth: 2 }}
                     />
-                    <Line type="monotone" dataKey="requests" stroke="#2563EB" strokeWidth={4} dot={{ r: 4, fill: '#fff', stroke: '#2563EB', strokeWidth: 2 }} activeDot={{ r: 8, fill: '#2563EB', stroke: '#fff', strokeWidth: 3 }} animationDuration={2000} />
+                    <Line type="monotone" dataKey="requests" stroke="#38BDF8" strokeWidth={4} dot={{ r: 4, fill: '#0B1120', stroke: '#38BDF8', strokeWidth: 2 }} activeDot={{ r: 8, fill: '#38BDF8', stroke: '#0B1120', strokeWidth: 3 }} animationDuration={2000} />
                   </LineChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -160,19 +163,19 @@ export const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Radar Chart */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
-            <Card className="h-full shadow-sm border-surface-gray group hover:shadow-md transition-shadow bg-white text-ink-950">
-              <CardHeader className="border-b border-surface-gray bg-surface-light/30">
-                <CardTitle className="text-sm sm:text-base font-bold">Industry Fitment</CardTitle>
+            <Card className={`${chartCardClass} group hover:border-cyber-cyan/40 transition-colors`}>
+              <CardHeader className={chartHeaderClass}>
+                <CardTitle className="text-sm sm:text-base font-bold text-white">Industry Fitment</CardTitle>
               </CardHeader>
               <CardContent className="h-72 flex items-center justify-center pt-6 pb-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="65%" data={dashboardData.industryFitScores}>
-                    <PolarGrid stroke="#F1F5F9" />
-                    <PolarAngleAxis dataKey="industry" tick={{ fill: '#64748B', fontSize: 10, fontWeight: 600 }} />
+                    <PolarGrid stroke="rgba(255,255,255,0.12)" />
+                    <PolarAngleAxis dataKey="industry" tick={{ fill: '#CBD5E1', fontSize: 10, fontWeight: 600 }} />
                     <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                     <Radar name="AMR" dataKey="AMR" stroke="#2563EB" fill="#2563EB" fillOpacity={0.3} animationDuration={1500} />
                     <Radar name="Arm" dataKey="Arm" stroke="#10B981" fill="#10B981" fillOpacity={0.3} animationDuration={1500} />
-                    <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                    <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)', background: '#0B1120', color: '#fff', boxShadow: '0 4px 20px rgb(0 0 0 / 0.35)' }} />
                   </RadarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -181,9 +184,9 @@ export const Dashboard: React.FC = () => {
 
           {/* Pie Chart */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
-            <Card className="h-full shadow-sm border-surface-gray group hover:shadow-md transition-shadow bg-white text-ink-950">
-              <CardHeader className="border-b border-surface-gray bg-surface-light/30">
-                <CardTitle className="text-sm sm:text-base font-bold">Global Origin</CardTitle>
+            <Card className={`${chartCardClass} group hover:border-cyber-cyan/40 transition-colors`}>
+              <CardHeader className={chartHeaderClass}>
+                <CardTitle className="text-sm sm:text-base font-bold text-white">Global Origin</CardTitle>
               </CardHeader>
               <CardContent className="h-72 pt-6">
                 <ResponsiveContainer width="100%" height="100%">
@@ -197,8 +200,8 @@ export const Dashboard: React.FC = () => {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} className="hover:opacity-80 transition-opacity outline-none" />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }} />
-                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 600 }} />
+                    <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)', background: '#0B1120', color: '#fff', boxShadow: '0 10px 25px rgb(0 0 0 / 0.35)' }} />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 600, color: '#CBD5E1' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </CardContent>

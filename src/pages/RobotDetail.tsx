@@ -8,6 +8,7 @@ import {
   Battery,
   BookmarkCheck,
   BookmarkPlus,
+  Bot,
   CalendarClock,
   ChevronDown,
   Cpu,
@@ -124,7 +125,10 @@ export const RobotDetail: React.FC = () => {
     { label: 'Battery', value: `${robot.batteryLifeHours} hrs`, icon: Battery },
     { label: 'Deployment', value: `${robot.deploymentWeeks} weeks`, icon: CalendarClock },
     { label: 'Price range', value: `${formatPrice(robot.priceMinJPY)} - ${formatPrice(robot.priceMaxJPY)}`, icon: Gauge },
+    { label: 'Pricing model', value: robot.priceModel || 'Manufacturer quote required', icon: FileText },
+    { label: 'ROI baseline', value: robot.roiMonths ? `${robot.roiMonths} months` : 'Pilot dependent', icon: Activity },
     { label: 'Japan support', value: robot.japanSupport ? 'Local SLA visible' : 'Partner review needed', icon: ShieldCheck },
+    { label: 'Japan regions', value: robot.japanRegions?.join(', ') || 'Support path under review', icon: MapPin },
     { label: 'Certifications', value: robot.certifications.join(', '), icon: FileText },
     { label: 'Integration', value: robot.integrationTypes.join(', '), icon: GitBranch },
     { label: 'Risk level', value: robot.limitations.length > 1 ? 'Managed review' : 'Low friction', icon: ShieldAlert },
@@ -144,7 +148,7 @@ export const RobotDetail: React.FC = () => {
     {
       title: 'Facility readiness',
       level: robot.operatingEnvironment,
-      text: robot.limitations[0] || 'Confirm floor quality, obstacle density, and safety zoning before deployment.',
+      text: robot.facilityRequirements?.join(', ') || robot.limitations[0] || 'Confirm floor quality, obstacle density, and safety zoning before deployment.',
     },
     {
       title: 'Training requirement',
@@ -154,7 +158,7 @@ export const RobotDetail: React.FC = () => {
     {
       title: 'Support notes',
       level: robot.japanSupport ? 'Japan visible' : 'Remote first',
-      text: manufacturer?.supportDetails || 'Support path requires manufacturer confirmation.',
+      text: robot.supportTier || manufacturer?.supportDetails || 'Support path requires manufacturer confirmation.',
     },
   ];
 
@@ -181,9 +185,15 @@ export const RobotDetail: React.FC = () => {
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055] shadow-[0_30px_100px_rgba(0,0,0,0.38)] backdrop-blur-xl">
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:32px_32px] opacity-50" />
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyber-cyan/60 to-transparent" />
-                <img src={robot.image} alt={robot.name} className="relative z-10 h-full w-full object-cover opacity-85 grayscale transition duration-700 hover:scale-105 hover:grayscale-0" />
+                <img src={robot.image} alt={robot.name} className="relative z-10 h-full w-full object-cover opacity-38 grayscale transition duration-700 hover:scale-105" />
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink-950/78 via-transparent to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 z-30 flex flex-wrap items-center gap-2">
+                <div className="absolute inset-0 z-30 flex items-center justify-center">
+                  <div className="relative flex h-32 w-32 items-center justify-center rounded-[2rem] border border-cyber-cyan/25 bg-ink-950/45 shadow-[0_0_70px_rgba(56,189,248,0.20)] backdrop-blur-[2px] sm:h-44 sm:w-44">
+                    <div className="absolute inset-4 rounded-[1.5rem] border border-dashed border-white/15" />
+                    <Bot className="h-14 w-14 text-white drop-shadow-[0_0_20px_rgba(56,189,248,0.55)] sm:h-20 sm:w-20" />
+                  </div>
+                </div>
+                <div className="absolute bottom-5 left-5 right-5 z-40 flex flex-wrap items-center gap-2">
                   <Badge variant="navy" className="bg-ink-950/80">{robot.category}</Badge>
                   <Badge variant={robot.japanSupport ? 'success' : 'warning'}>
                     {robot.japanSupport ? 'Japan Support Verified' : 'Japan Partner Review'}

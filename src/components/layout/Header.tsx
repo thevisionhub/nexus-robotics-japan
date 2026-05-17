@@ -34,27 +34,27 @@ export const Header: React.FC = () => {
     )}>
       {/* Floating Glass Container */}
       <div className={cn(
-        "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-500",
+        "mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 transition-all duration-500",
         scrolled ? "w-[95%] sm:w-full" : "w-full"
       )}>
         <div className={cn(
           "flex items-center justify-between transition-all duration-500 relative overflow-hidden",
           scrolled 
-            ? "h-14 bg-titanium-900/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-4 sm:px-6" 
-            : "h-16 bg-transparent border-transparent px-2"
+            ? "h-14 bg-titanium-900/86 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-3 sm:px-6" 
+            : "h-14 rounded-2xl border border-white/10 bg-ink-950/62 px-3 backdrop-blur-xl shadow-[0_16px_50px_rgba(0,0,0,0.18)] md:h-16 md:bg-transparent md:border-transparent md:px-2 md:shadow-none md:backdrop-blur-0"
         )}>
           
           <div className="flex items-center gap-2">
             <Link to="/" className="flex items-center gap-3 group relative z-10 outline-none" data-cursor="HOME">
               <div className={cn(
                 "flex items-center justify-center rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(0,229,255,0.2)]",
-                scrolled ? "h-8 w-8 bg-cyber-indigo text-white" : "h-10 w-10 bg-white text-titanium-900"
+                scrolled ? "h-8 w-8 bg-cyber-indigo text-white" : "h-8 w-8 bg-white text-titanium-900 sm:h-10 sm:w-10"
               )}>
-                <Bot size={scrolled ? 18 : 22} />
+                <Bot size={scrolled ? 18 : 20} />
               </div>
               <span className={cn(
                 "font-extrabold tracking-tight transition-colors",
-                scrolled ? "text-white text-lg" : "text-white text-xl"
+                scrolled ? "text-white text-lg" : "text-white text-base sm:text-xl"
               )}>
                 NEXUS
               </span>
@@ -110,7 +110,8 @@ export const Header: React.FC = () => {
           <div className="flex items-center md:hidden gap-3 relative z-10">
             <button
               type="button"
-              className={cn("outline-none p-2 rounded-lg", scrolled ? "text-white" : "text-white")}
+              aria-label="Open navigation menu"
+              className={cn("outline-none p-2 rounded-lg text-white hover:bg-white/10", scrolled ? "text-white" : "text-white")}
               onClick={() => setMobileMenuOpen(true)}
             >
               <Menu size={24} />
@@ -128,14 +129,14 @@ export const Header: React.FC = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-titanium-900/95 backdrop-blur-xl flex flex-col"
           >
-            <div className="flex justify-between items-center p-6 border-b border-white/10">
+            <div className="flex justify-between items-center p-4 sm:p-6 border-b border-white/10">
               <span className="text-xl font-extrabold text-white tracking-tight">NEXUS</span>
-              <button onClick={() => setMobileMenuOpen(false)} className="text-white/70 hover:text-white p-2 outline-none">
+              <button aria-label="Close navigation menu" onClick={() => setMobileMenuOpen(false)} className="text-white/70 hover:text-white p-2 outline-none">
                 <X size={28} />
               </button>
             </div>
             
-            <div className="flex flex-col p-6 gap-2">
+            <div className="flex flex-col p-4 sm:p-6 gap-2 overflow-y-auto">
               {navLinks.map((link, i) => {
                 const Icon = link.icon;
                 return (

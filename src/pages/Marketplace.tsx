@@ -230,7 +230,7 @@ export const Marketplace: React.FC = () => {
 
         <div className="mb-6 flex flex-col gap-2 bg-titanium-800 px-4 py-3 sm:p-4 rounded-xl shadow-sm border border-white/10 md:flex-row md:items-center md:justify-between">
           <p className="text-white font-semibold text-sm sm:text-base">
-            Showing <span className="text-cyber-cyan font-bold">{filteredRobots.length}</span> verified solutions
+            {isFiltering ? 'Scanning registry parameters against' : 'Showing'} <span className="text-cyber-cyan font-bold">{filteredRobots.length}</span> verified solutions
           </p>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-surface-muted">
             {matchedConstraints.length ? matchedConstraints.join(' / ') : 'Full registry scan'}
@@ -239,15 +239,20 @@ export const Marketplace: React.FC = () => {
 
         {/* Results Grid with Shimmer */}
         {isFiltering ? (
-          <div className={cn("grid gap-4 sm:gap-6", viewMode === 'grid' ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "grid-cols-1")}>
+          <div className={cn("grid min-h-[420px] gap-4 sm:gap-6", viewMode === 'grid' ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "grid-cols-1")}>
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className={cn("bg-titanium-800 rounded-2xl shadow-sm border border-white/10 overflow-hidden relative", viewMode === 'list' ? 'h-48 flex' : 'h-[380px]')}>
                 {/* Shimmer overlay */}
                 <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent z-10" />
                 <div className={cn("bg-white/5", viewMode === 'list' ? 'w-48 h-full' : 'h-48 w-full')} />
                 <div className="p-5 flex-1 space-y-4">
+                  <div className="h-3 bg-cyber-cyan/15 rounded w-24" />
                   <div className="h-4 bg-white/5 rounded w-3/4" />
                   <div className="h-4 bg-white/5 rounded w-1/2" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="h-12 bg-white/5 rounded-lg" />
+                    <div className="h-12 bg-white/5 rounded-lg" />
+                  </div>
                   <div className="h-10 bg-white/5 rounded w-full mt-auto" />
                 </div>
               </div>
@@ -263,8 +268,8 @@ export const Marketplace: React.FC = () => {
                 <motion.div 
                   key={robot.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 1, scale: 0.985, y: 8 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
                 >

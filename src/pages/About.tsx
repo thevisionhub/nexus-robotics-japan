@@ -46,7 +46,7 @@ export const About: React.FC = () => {
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <SectionKicker>Trust Story</SectionKicker>
-            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="text-balance text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="text-balance text-4xl font-black leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               A procurement intelligence layer for Japan's automation future.
             </motion.h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-platinum-300">
@@ -77,7 +77,7 @@ export const About: React.FC = () => {
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 max-w-3xl">
             <SectionKicker className="border-ink-950/10 bg-ink-950/5 text-ink-800">Operating Model</SectionKicker>
-            <h2 className="text-balance text-4xl font-black tracking-tight text-ink-950 sm:text-5xl">
+            <h2 className="text-balance text-3xl font-black tracking-tight text-ink-950 sm:text-5xl">
               We turn robotics discovery into a decision workflow.
             </h2>
           </div>
@@ -116,7 +116,7 @@ export const About: React.FC = () => {
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1fr_auto]">
           <div>
             <SectionKicker>Next Step</SectionKicker>
-            <h2 className="text-balance text-4xl font-black tracking-tight sm:text-5xl">
+            <h2 className="text-balance text-3xl font-black tracking-tight sm:text-5xl">
               Bring a real automation challenge into the system.
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-8 text-platinum-300">
